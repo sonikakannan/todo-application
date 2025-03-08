@@ -6,9 +6,11 @@ import { TfiMenuAlt } from "react-icons/tfi";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import logo from "../assets/logo.png";
+import { useClerk, UserButton, useUser } from "@clerk/clerk-react";
 
 const Navbar = ({ toggleSidebar }) => {
- 
+  const { openSignIn } = useClerk();
+  const { user } = useUser();
 
   return (
     <AppBar
@@ -38,6 +40,16 @@ const Navbar = ({ toggleSidebar }) => {
           <IconButton color="inherit" onClick={() => setDarkMode(!darkMode)}>
              <DarkModeIcon />
           </IconButton>
+          {
+            user? <UserButton/>:(
+              <button
+              onClick={(e) => openSignIn()}
+              className="bg-green-600 text-white px-6 sm:px-9 py-2 rounded-full cursor-pointer"
+            >
+              Login
+            </button>
+            )
+          }
         </Box>
       </Toolbar>
     </AppBar>
